@@ -6888,5 +6888,160 @@ Please confirm you'll add my prize to my order. Thank you! 🙏`
   })();
 </script>
 
+
+
+<!-- MOBILE GAME BUTTON VISIBILITY FIX -->
+<style id="mobile-game-button-visibility-fix">
+  @media (max-width: 768px) {
+    /* Keep the Games page compact and leave space for the phone bottom nav */
+    #page-games {
+      padding-bottom: calc(105px + env(safe-area-inset-bottom)) !important;
+    }
+    #page-games .games-hero {
+      padding: 18px 14px 14px !important;
+    }
+    #page-games .games-hero h1 {
+      font-size: clamp(24px, 8vw, 34px) !important;
+      margin-bottom: 8px !important;
+    }
+    #page-games .games-hero p {
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+    }
+    #page-games .game-section {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 10px 28px !important;
+    }
+    #page-games .game-section > h2,
+    #page-games .game-section > p,
+    #page-games .game-section > div:first-child {
+      margin-left: 4px !important;
+      margin-right: 4px !important;
+    }
+    #page-games .game-container {
+      border-radius: 18px !important;
+      overflow: hidden !important;
+    }
+
+    /* Make the Tap Frenzy HUD shorter on small screens */
+    #page-games .game-header {
+      padding: 12px 12px 10px !important;
+      gap: 10px !important;
+    }
+    #page-games .game-title-row {
+      width: 100% !important;
+    }
+    #page-games .game-icon-badge {
+      width: 44px !important;
+      height: 44px !important;
+      flex: 0 0 44px !important;
+    }
+    #page-games .game-title {
+      font-size: 18px !important;
+      line-height: 1.1 !important;
+    }
+    #page-games .game-subtitle {
+      font-size: 12px !important;
+    }
+    #page-games .game-hud {
+      width: 100% !important;
+      justify-content: space-around !important;
+      gap: 6px !important;
+    }
+    #page-games .hud-val {
+      font-size: 21px !important;
+    }
+    #page-games .hud-lbl {
+      font-size: 10px !important;
+    }
+
+    /* The old 420px canvas was too short, so the Start button got hidden. */
+    #page-games .game-canvas-wrap {
+      height: min(560px, calc(100svh - 145px)) !important;
+      min-height: 500px !important;
+      max-height: 620px !important;
+      align-items: stretch !important;
+    }
+    @supports not (height: 100svh) {
+      #page-games .game-canvas-wrap {
+        height: min(560px, calc(100vh - 145px)) !important;
+      }
+    }
+    #page-games #tap-canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Start/game-over overlays scroll internally and the red button stays visible. */
+    #page-games .game-overlay {
+      justify-content: flex-start !important;
+      gap: 8px !important;
+      padding: 14px 14px calc(16px + env(safe-area-inset-bottom)) !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    #page-games .go-icon {
+      font-size: 38px !important;
+      line-height: 1 !important;
+      margin-top: 2px !important;
+    }
+    #page-games .go-title {
+      font-size: clamp(24px, 8vw, 34px) !important;
+      line-height: 1.12 !important;
+      margin: 0 !important;
+    }
+    #page-games .go-sub {
+      max-width: 100% !important;
+      font-size: 13px !important;
+      line-height: 1.55 !important;
+      margin: 0 auto !important;
+    }
+    #page-games .rule-chips {
+      max-width: 100% !important;
+      gap: 7px !important;
+      margin: 2px 0 0 !important;
+    }
+    #page-games .rule-chip {
+      padding: 7px 11px !important;
+      font-size: 12px !important;
+      line-height: 1.1 !important;
+    }
+    #page-games .go-btn {
+      position: sticky !important;
+      bottom: 8px !important;
+      z-index: 20 !important;
+      width: min(100%, 360px) !important;
+      min-height: 52px !important;
+      padding: 14px 18px !important;
+      margin-top: 6px !important;
+      border-radius: 14px !important;
+      font-size: 16px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      box-shadow: 0 10px 30px rgba(226,55,68,.45) !important;
+    }
+    #page-games .go-stats {
+      gap: 10px !important;
+    }
+  }
+
+  @media (max-width: 380px) {
+    #page-games .game-canvas-wrap {
+      height: min(545px, calc(100svh - 125px)) !important;
+      min-height: 490px !important;
+    }
+    #page-games .rule-chip {
+      font-size: 11.5px !important;
+      padding: 6px 9px !important;
+    }
+    #page-games .go-sub {
+      font-size: 12.5px !important;
+    }
+  }
+</style>
+
 </body>
 </html>
