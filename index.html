@@ -2073,17 +2073,19 @@
         50%      { box-shadow: 0 0 18px 4px rgba(226,55,68,0.25); }
       }
 
-      /* ── Hero H1 Text Reveal ── */
-      .hero-content {
-        animation: hero-reveal 0.9s cubic-bezier(0.16,1,0.3,1) both;
+      /* ── Hero H1 Text Reveal (desktop only) ── */
+      @media (min-width: 769px) {
+        .hero-content {
+          animation: hero-reveal 0.9s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        .hero h1 { animation: hero-reveal 1s 0.15s cubic-bezier(0.16,1,0.3,1) both; }
+        .hero-sub { animation: hero-reveal 1s 0.3s cubic-bezier(0.16,1,0.3,1) both; }
+        .hero-cta-row { animation: hero-reveal 1s 0.45s cubic-bezier(0.16,1,0.3,1) both; }
       }
       @keyframes hero-reveal {
         from { opacity:0; transform: translateY(32px); }
         to   { opacity:1; transform: translateY(0); }
       }
-      .hero h1 { animation: hero-reveal 1s 0.15s cubic-bezier(0.16,1,0.3,1) both; }
-      .hero-sub { animation: hero-reveal 1s 0.3s cubic-bezier(0.16,1,0.3,1) both; }
-      .hero-cta-row { animation: hero-reveal 1s 0.45s cubic-bezier(0.16,1,0.3,1) both; }
 
       /* ── Counter animate ── */
       .hstat-num {
@@ -2120,20 +2122,22 @@
         box-shadow: 0 0 20px rgba(226,55,68,0.6);
       }
 
-      /* ── Scroll-reveal utility ── */
-      .reveal {
-        opacity: 0;
-        transform: translateY(28px);
-        transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+      /* ── Scroll-reveal utility (desktop only — mobile shows all content immediately) ── */
+      @media (min-width: 769px) {
+        .reveal {
+          opacity: 0;
+          transform: translateY(28px);
+          transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
       }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .reveal-delay-1 { transition-delay: 0.1s; }
-      .reveal-delay-2 { transition-delay: 0.2s; }
-      .reveal-delay-3 { transition-delay: 0.3s; }
-      .reveal-delay-4 { transition-delay: 0.4s; }
 
       /* ── Ticker / marquee winners bar ── */
       .winners-ticker-wrap {
@@ -2264,14 +2268,16 @@
         100% { background-position: 0% 50%; }
       }
 
-      /* ── Stat card pop-in ── */
-      .hstat { 
-        animation: stat-pop 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+      /* ── Stat card pop-in (desktop only — mobile just shows them) ── */
+      @media (min-width: 769px) {
+        .hstat { 
+          animation: stat-pop 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+        .hstat:nth-child(1) { animation-delay: 0.6s; }
+        .hstat:nth-child(3) { animation-delay: 0.75s; }
+        .hstat:nth-child(5) { animation-delay: 0.9s; }
+        .hstat:nth-child(7) { animation-delay: 1.05s; }
       }
-      .hstat:nth-child(1) { animation-delay: 0.6s; }
-      .hstat:nth-child(3) { animation-delay: 0.75s; }
-      .hstat:nth-child(5) { animation-delay: 0.9s; }
-      .hstat:nth-child(7) { animation-delay: 1.05s; }
       @keyframes stat-pop {
         from { opacity: 0; transform: scale(0.7); }
         to   { opacity: 1; transform: scale(1); }
@@ -2283,6 +2289,10 @@
         inset: 0;
         pointer-events: none;
         z-index: 9998;
+        background: transparent !important;
+      }
+      @media (max-width: 768px) {
+        .sparkle-canvas { display: none !important; }
       }
 
       /* ── Spin wheel glow pulse ── */
@@ -5450,22 +5460,22 @@
 
       /* ── 4. Floating Particle Canvas (sparkle on cursor — desktop only) ── */
       const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-      const sparkCanvas = document.createElement('canvas');
-      sparkCanvas.className = 'sparkle-canvas';
-      document.body.appendChild(sparkCanvas);
-      const sctx = sparkCanvas.getContext('2d');
-      let particles = [];
-      function resizeSpark() {
-        sparkCanvas.width = window.innerWidth;
-        sparkCanvas.height = window.innerHeight;
-      }
-      resizeSpark();
-      window.addEventListener('resize', resizeSpark);
-
-      const COLORS = ['#e23744','#ff5a68','#f59e0b','#ff4ea3','#fcd34d','#4ade80'];
+      let sparkCanvas, sctx, particles = [];
       if (!isTouchDevice) {
+        sparkCanvas = document.createElement('canvas');
+        sparkCanvas.className = 'sparkle-canvas';
+        document.body.appendChild(sparkCanvas);
+        sctx = sparkCanvas.getContext('2d');
+        function resizeSpark() {
+          sparkCanvas.width = window.innerWidth;
+          sparkCanvas.height = window.innerHeight;
+        }
+        resizeSpark();
+        window.addEventListener('resize', resizeSpark);
+
+        const COLORS = ['#e23744','#ff5a68','#f59e0b','#ff4ea3','#fcd34d','#4ade80'];
         document.addEventListener('mousemove', (e) => {
-          if (Math.random() > 0.55) return; // throttle
+          if (Math.random() > 0.55) return;
           for (let i = 0; i < 2; i++) {
             particles.push({
               x: e.clientX + (Math.random()-0.5)*12,
@@ -5480,49 +5490,33 @@
             });
           }
         });
-      }
 
-      function drawStar(ctx, x, y, r, color, alpha) {
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = color;
-        ctx.translate(x, y);
-        ctx.beginPath();
-        for (let i = 0; i < 5; i++) {
-          const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
-          i === 0 ? ctx.moveTo(r * Math.cos(angle), r * Math.sin(angle))
-                  : ctx.lineTo(r * Math.cos(angle), r * Math.sin(angle));
-        }
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      }
-
-      function loopSpark() {
-        sctx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
-        particles = particles.filter(p => p.life > 0);
-        particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.life -= p.decay;
-          p.vy += 0.04; // gravity
-          if (p.shape === 'circle') {
-            sctx.save();
-            sctx.globalAlpha = p.life * 0.7;
-            sctx.fillStyle = p.color;
-            sctx.shadowColor = p.color;
-            sctx.shadowBlur = 6;
-            sctx.beginPath();
-            sctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-            sctx.fill();
-            sctx.restore();
-          } else {
-            drawStar(sctx, p.x, p.y, p.size, p.color, p.life * 0.7);
+        function drawStar(ctx, x, y, r, color, alpha) {
+          ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = color;
+          ctx.translate(x, y); ctx.beginPath();
+          for (let i = 0; i < 5; i++) {
+            const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+            i === 0 ? ctx.moveTo(r * Math.cos(angle), r * Math.sin(angle))
+                    : ctx.lineTo(r * Math.cos(angle), r * Math.sin(angle));
           }
-        });
-        requestAnimationFrame(loopSpark);
+          ctx.closePath(); ctx.fill(); ctx.restore();
+        }
+
+        function loopSpark() {
+          sctx.clearRect(0, 0, sparkCanvas.width, sparkCanvas.height);
+          particles = particles.filter(p => p.life > 0);
+          particles.forEach(p => {
+            p.x += p.vx; p.y += p.vy; p.life -= p.decay; p.vy += 0.04;
+            if (p.shape === 'circle') {
+              sctx.save(); sctx.globalAlpha = p.life * 0.7; sctx.fillStyle = p.color;
+              sctx.shadowColor = p.color; sctx.shadowBlur = 6;
+              sctx.beginPath(); sctx.arc(p.x, p.y, p.size, 0, Math.PI*2); sctx.fill(); sctx.restore();
+            } else { drawStar(sctx, p.x, p.y, p.size, p.color, p.life * 0.7); }
+          });
+          requestAnimationFrame(loopSpark);
+        }
+        loopSpark();
       }
-      loopSpark();
 
       /* ── 5. Winners Ticker Builder ── */
       const defaultWinnerTickerItems = [
