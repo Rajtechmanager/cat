@@ -4841,7 +4841,7 @@
           document.getElementById("sr-ico").textContent="🎉";
           document.getElementById("sr-ttl").textContent="You Won! Congratulations!";
           document.getElementById("sr-gift").textContent=prizeName;
-          document.getElementById("sr-sub").innerHTML=`🎉 Hey! ${name || "Customer"} has won 🎁 ${prizeName}!<br><br>🏷️ Prize ID: <b>${prizeId}</b><br>📅 Last date to avail this offer: 1 June 2026<br><br>🎯 <b>IMPORTANT — Instructions for next order:</b><br>To claim your prize, before placing your <b>NEXT order on Zomato</b>, send us a WhatsApp message with:<br>👤 Your Name<br>📸 Order Screenshot<br>🎁 Gift Screenshot (this winning screen)<br><br><span style="color:#6ee7b7;">Please send all 3 before placing your next order to avail the prize! 🙏</span>`;
+          document.getElementById("sr-sub").innerHTML=`🎉 Hey! ${name || "Customer"} has won 🎁 ${prizeName}!<br><br>🏷️ Prize ID: <b>${prizeId}</b><br>📅 Last date to avail this offer: ${expiryStr}<br><br>🎯 <b>IMPORTANT — Instructions for next order:</b><br>To claim your prize, before placing your <b>NEXT order on Zomato</b>, send us a WhatsApp message with:<br>👤 Your Name<br>📸 Order Screenshot<br>🎁 Gift Screenshot (this winning screen)<br><br><span style="color:#6ee7b7;">Please send all 3 before placing your next order to avail the prize! 🙏</span>`;
           document.getElementById("sr-prize-note").style.display="block";
           document.getElementById("sr-whatsapp-prompt").style.display="block";
           document.getElementById("sr-try-again-note").style.display="none";
@@ -4856,20 +4856,12 @@
           document.getElementById("sr-preorder-prize").textContent=prizeName;
           // Build WhatsApp link with prize details + pre-order reminder
           const waMsg=encodeURIComponent(
-            `Hi Pocket Momo! 📞 I'm about to place an order and want to inform you before ordering.
-
-My Prize: ${prizeName}
-Prize ID: ${prizeId}
-My Name (Zomato account): ${name}
-Restaurant: Pocket Momo
-Items I plan to order: [Please list your items here]
-
-Please confirm you'll add my prize to my order. Thank you! 🙏`
+            `🎉 Hey! ${name || "Customer"} has won 🎁 ${prizeName}!\n\n🏷️ Prize ID: ${prizeId}\n📅 Last date to avail this offer: ${expiryStr}\n\n🎯 IMPORTANT — Instructions for next order:\nTo claim your prize, before placing your NEXT order on Zomato, send us a WhatsApp message with:\n👤 Your Name\n📸 Order Screenshot\n🎁 Gift Screenshot (this winning screen)\n\nPlease send all 3 before placing your next order to avail the prize! 🙏`
           );
           document.getElementById("sr-wa-link").href=`https://wa.me/916266044288?text=${waMsg}`;
           // Pre-order WhatsApp link (prompts them to contact before ordering)
           const preorderMsg=encodeURIComponent(
-            `Hi Pocket Momo! 📞 I'm about to place an order and want to inform you before ordering.\n\nMy Prize: ${prizeName}\nPrize ID: ${prizeId}\nMy Name (Zomato account): ${name}\nRestaurant: Pocket Momo\nItems I plan to order: [Please list your items here]\n\nPlease confirm you'll add my prize to my order. Thank you! 🙏`
+            `🎉 Hey! ${name || "Customer"} has won 🎁 ${prizeName}!\n\n🏷️ Prize ID: ${prizeId}\n📅 Last date to avail this offer: ${expiryStr}\n\n🎯 IMPORTANT — Instructions for next order:\nTo claim your prize, before placing your NEXT order on Zomato, send us a WhatsApp message with:\n👤 Your Name\n📸 Order Screenshot\n🎁 Gift Screenshot (this winning screen)\n\nPlease send all 3 before placing your next order to avail the prize! 🙏`
           );
           document.getElementById("sr-preorder-wa").href=`https://wa.me/916266044288?text=${preorderMsg}`;
         } else {
